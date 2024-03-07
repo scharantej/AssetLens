@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8" />
+<title>Asset Insights</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+
+<body>
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<h1>Asset Insights</h1>
+<hr />
+<div id="insights-container">
+<!-- Insights will be dynamically rendered here -->
+</div>
+</div>
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+$(document).ready(function() {
+// Fetch insights from the API
+$.ajax({
+url: '/api/insights',
+method: 'GET',
+success: function(data) {
+// Parse the JSON response
+var insights = JSON.parse(data);
+
+// Render the insights in the HTML
+var insightsContainer = $('#insights-container');
+insightsContainer.empty();
+insights.forEach(function(insight) {
+insightsContainer.append(`
+<div class="card">
+<div class="card-body">
+<h5 class="card-title">${insight.Metric}</h5>
+<p class="card-text">${insight.Value}</p>
+</div>
+</div>
+`);
+});
+}
+});
+});
+</script>
+</body>
+
+</html>
+
